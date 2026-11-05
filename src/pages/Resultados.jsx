@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { AutorizacionesContext } from '../context/JuegoContexto';
 import { Box, Typography, Button, Container, Paper } from '@mui/material';
 
-const PUNTAJE_MAXIMO = 100; // 50 por juego
+const PUNTAJE_MAXIMO = 100;
 
-// Mensaje de felicitación según el puntaje total
 const mensajePorPuntaje = (total, nombre) => {
   if (total >= 90) return { emoji: '🏆', texto: `¡Excelente, ${nombre}! Sos un gran granjero.` };
   if (total >= 60) return { emoji: '🎉', texto: `¡Muy bien, ${nombre}! Conocés muy bien la granja.` };
@@ -18,7 +17,7 @@ const Resultados = () => {
     useContext(AutorizacionesContext);
   const navigate = useNavigate();
 
-  const nombreMostrado = nombre || 'Pequeño Granjero';
+  const nombreMostrado = nombre || guardarNombre(); //Revisar y resolver esta mrd
   const total = puntajeJuego1 + puntajeJuego2;
   const mensaje = mensajePorPuntaje(total, nombreMostrado);
 

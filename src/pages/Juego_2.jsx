@@ -126,7 +126,7 @@ const Juego2 = () => {
         </Typography>
 
         <Typography variant="h6" color="textSecondary" sx={{ mb: 3 }}>
-          Jugador: <b>{nombre || "Pequeño Granjero"}</b> | Ronda {rondaActual + 1} de {rondasJuego2.length}
+          Ronda {rondaActual + 1} de {rondasJuego2.length}
         </Typography>
 
         <Typography variant="h5" sx={{ my: 3, color: '#333', fontWeight: 'bold' }}>
