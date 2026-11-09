@@ -1,0 +1,44 @@
+[
+  {
+    "id": 14,
+    "nombre": "Melani",
+    "user": "Melani",
+    "password": "Granja14",
+    "rol": "estudiante"
+  },
+  {
+    "id": 12,
+    "nombre": "Nombre Compa 2",
+    "user": "compa2",
+    "password": "clave_estudiante_2",
+    "rol": "estudiante"
+  },
+  {
+    "id": 13,
+    "nombre": "Nombre Compa 3",
+    "user": "compa3",
+    "password": "clave_estudiante_3",
+    "rol": "estudiante"
+  },
+  {
+    "id": 15,
+    "nombre": "Nombre Compa 4",
+    "user": "compa4",
+    "password": "clave_estudiante_4",
+    "rol": "estudiante"
+  },
+  {
+    "id": 20,
+    "nombre": "Profe Uno",
+    "user": "profe1",
+    "password": "clave_profe_1",
+    "rol": "profesor"
+  },
+  {
+    "id": 21,
+    "nombre": "Profe Dos",
+    "user": "profe2",
+    "password": "clave_profe_2",
+    "rol": "profesor"
+  }
+]
