@@ -4,7 +4,6 @@
     "id": 1,
     "animal": "Vaca",
     "imagen": "🐮",
-    "descripcion": "La vaca está esperando su comida.",
     "opciones": [
       "Pasto",
       "Carne",
@@ -16,7 +15,6 @@
     "id": 2,
     "animal": "Gallina",
     "imagen": "🐔",
-    "descripcion": "La gallina tiene hambre.",
     "opciones": [
       "Maíz",
       "Pasto",
@@ -28,7 +26,6 @@
     "id": 3,
     "animal": "Chancho",
     "imagen": "🐷",
-    "descripcion": "El chancho busca algo para comer.",
     "opciones": [
       "Todo lo que encuentra",
       "Solo Pasto",
@@ -40,7 +37,6 @@
     "id": 4,
     "animal": "Oveja",
     "imagen": "🐑",
-    "descripcion": "La oveja está lista para comer.",
     "opciones": [
       "Pasto",
       "Hamburguesa",
@@ -52,7 +48,6 @@
     "id": 5,
     "animal": "Caballo",
     "imagen": "🐴",
-    "descripcion": "El caballo quiere comer algo rico.",
     "opciones": [
       "Pasto y Zanahoria",
       "Pollo",
