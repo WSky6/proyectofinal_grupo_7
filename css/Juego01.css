@@ -54,11 +54,12 @@ body {
 }
 
 .animal-card {
-  background: white;
-  border-radius: 25px;
+  background:#7BE67F ;
+  border-radius: 50%;
   padding: 25px;
   margin: 0 auto 30px;
-  max-width: 500px;
+  width: 250px;
+  height: 250px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
 }
 
@@ -69,7 +70,7 @@ body {
 }
 
 .animal-card h2 {
-  color: #438c45;
+  color: #418d43;
   font-size: 2rem;
   margin: 10px 0;
 }
