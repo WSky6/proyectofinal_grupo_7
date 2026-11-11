@@ -15,9 +15,8 @@ const CartaAnimal = ({ animal }) => {
     </div>
     
     <div className="animal-data"> 
-      <h2>{animal.animal}</h2>
+      <h3>{animal.animal}</h3>
       <p>{animal.descripcion}</p>
-
     </div>
     </div>
   );
