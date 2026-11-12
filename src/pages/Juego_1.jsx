@@ -10,11 +10,12 @@ import "../../css/Components.css";
 
 const Juego1 = () => {
   const navigate = useNavigate();
-
+  console.log("Renderizando Juego1.jsx");
   const {
     nombre,
     guardarPuntajeJuego1
   } = useContext(AutorizacionesContext);
+  
 
   const [rondas, setRondas] = useState([]);
   const [rondaActual, setRondaActual] = useState(0);
@@ -36,9 +37,10 @@ const Juego1 = () => {
         setError(false);
 
         const datos = await obtenerJuego1();
+        console.log("Datos del juego cargados:", datos);
 
-        if (!Array.isArray(datos) || datos.length !== 5) {
-          throw new Error("Los datos del juego no son válidos.");
+        if (!Array.isArray(datos) || datos.length === 0) {
+          throw new Error("Los datos del juego no son válidos o están vacíos.");
         }
 
         if (activo) {

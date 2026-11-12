@@ -3,7 +3,7 @@ import axios from "axios";
 export const obtenerJuego1 = async () => {
   try {
     const respuesta = await axios.get("/data/juego1.json");
-
+    console.log("Datos del juego 1 obtenidos:", respuesta.data);
     return respuesta.data;
 
   } catch (error) {
