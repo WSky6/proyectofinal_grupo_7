@@ -22,8 +22,8 @@ const Login = () => {
       const usuarioEncontrado = await servicesAutorizaciones.login(userLimpio, passLimpio);
 
       if (usuarioEncontrado) {
-        guardarNombre(usuarioEncontrado);
-        navegar('/Juego_1');
+        guardarNombre(usuarioEncontrado.nombre);
+        navegar('/juego-1');
       } else {
         alert('Usuario o contraseña incorrectos. ¡Revisá tus datos!');
       }
@@ -36,7 +36,7 @@ const Login = () => {
     <div className="contenedor-login">
       <div className="columna-formulario">
         <form className="formulario-login" onSubmit={manejarIngreso}>
-          <h2 className="titulo-formulario">Ingreso al Sistema</h2>
+          <h1 className="titulo-formulario">Ingreso al Sistema</h1>
 
           <label htmlFor="usuario" className="etiqueta-input">Usuario</label>
           <input

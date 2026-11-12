@@ -1,9 +1,7 @@
 .contenedor-login {
   display: flex;
-  width: 100vw;
+  width: 100wh;
   height: 100vh;
-  margin: 0;
-  padding: 0;
 }
 
 
@@ -59,4 +57,9 @@
 
 .boton-comenzar:hover {
   background-color: #e68a00;
+}
+
+.titulo-formulario {
+  font-size: 35px;
+  text-align: center;
 }
