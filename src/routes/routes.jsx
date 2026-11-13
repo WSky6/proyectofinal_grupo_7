@@ -6,6 +6,7 @@ import Juego2 from "../pages/Juego_2";
 import Resultados from "../pages/Resultados";
 import Error from "../pages/Error";
 import App from "../App";
+import ProtectorRuta from "../components/ProtectorRuta";
 
 export const routes = createBrowserRouter([
     {
@@ -14,10 +15,10 @@ export const routes = createBrowserRouter([
         errorElement: <Error />,
         children: [
             { index: true, element: <Login /> },
-            { path: "juego-1", element: <Juego1 /> },
-            { path: "juego-2", element: <Juego2 /> },
-            { path: "resultados", element: <Resultados  /> },
-            { path: "usuarios-resultados", element: <UsuariosResultados /> }
+            { path: "juego-1", element: <ProtectorRuta><Juego1 /> </ProtectorRuta> },
+            { path: "juego-2", element: <ProtectorRuta><Juego2 /> </ProtectorRuta> },
+            { path: "resultados", element: <ProtectorRuta><Resultados  /> </ProtectorRuta> },
+            { path: "usuarios-resultados", element: <ProtectorRuta soloProfesor="profesor"><UsuariosResultados /> </ProtectorRuta> }
         ]
     }
 ]);
