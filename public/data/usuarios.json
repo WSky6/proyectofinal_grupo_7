@@ -27,17 +27,17 @@
     "password": "tukchero",
     "rol": "estudiante"
   },
-  {
+{
     "id": 20,
-    "nombre": "Sosa",
-    "user": "profe1",
+    "nombre": "Profesor Sosa",
+    "user": "Sosa", 
     "password": "claveprofe1",
     "rol": "profesor"
   },
   {
     "id": 21,
-    "nombre": "Quispe",
-    "user": "profe2",
+    "nombre": "Profe Quispe",
+    "user": "Quispe",
     "password": "claveprofe2",
     "rol": "profesor"
   }
