@@ -1,42 +1,57 @@
 [
   {
     "id": 1,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
     "opciones": [
-      { "nombre": "Perro", "esIntruso": false, "emoji": "🐶" },
-      { "nombre": "Gato", "esIntruso": false, "emoji": "🐱" },
-      { "nombre": "León", "esIntruso": true, "emoji": "🦁" }
-    ]
+      "Perro",
+      "Gato",
+      "León"
+    ],
+    "respuestaCorrecta": "León"
   },
   {
     "id": 2,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
     "opciones": [
-      { "nombre": "Vaca", "esIntruso": false, "emoji": "🐮" },
-      { "nombre": "Oveja", "esIntruso": false, "emoji": "🐑" },
-      { "nombre": "Cocodrilo", "esIntruso": true, "emoji": "🐊" }
-    ]
+      "Vaca",
+      "Oveja",
+      "Cocodrilo"
+    ],
+    "respuestaCorrecta": "Cocodrilo"
   },
   {
     "id": 3,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
     "opciones": [
-      { "nombre": "Gallina", "esIntruso": false, "emoji": "🐔" },
-      { "nombre": "Chancho", "esIntruso": false, "emoji": "🐷" },
-      { "nombre": "Elefante", "esIntruso": true, "emoji": "🐘" }
-    ]
+      "Gallina",
+      "Chancho",
+      "Elefante"
+    ],
+    "respuestaCorrecta": "Elefante"
   },
   {
     "id": 4,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
     "opciones": [
-      { "nombre": "Caballo", "esIntruso": false, "emoji": "🐴" },
-      { "nombre": "Vaca", "esIntruso": false, "emoji": "🐮" },
-      { "nombre": "Tiburón", "esIntruso": true, "emoji": "🦈" }
-    ]
+      "Caballo",
+      "Vaca",
+      "Tiburón"
+    ],
+    "respuestaCorrecta": "Tiburón"
   },
   {
     "id": 5,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
     "opciones": [
-      { "nombre": "Oveja", "esIntruso": false, "emoji": "🐑" },
-      { "nombre": "Perro", "esIntruso": false, "emoji": "🐶" },
-      { "nombre": "Pingüino", "esIntruso": true, "emoji": "🐧" }
-    ]
+      "Oveja",
+      "Perro",
+      "Pingüino"
+    ],
+    "respuestaCorrecta": "Pingüino"
   }
 ]

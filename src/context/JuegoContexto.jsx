@@ -1,34 +1,39 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { PARTIDA_INICIAL, guardarPartidaEnSesion, obtenerPartidaEnSesion } from "../services/servicesPartidas.js";
 
-export const AutorizacionesContext = createContext(null);
+export const JuegoContext = createContext(null);
 
-export const ProveedorContext = ({ children }) => {
+export const ProveedorJuegoContext = ({ children }) => {
 
-    const [nombre, setNombre] = useState("");
-    const [puntajeJuego1, setPuntajeJuego1] = useState(0);
-    const [puntajeJuego2, setPuntajeJuego2] = useState(0);
+    const [partida, setPartida] = useState(obtenerPartidaEnSesion);
+    useEffect(() => {
+        guardarPartidaEnSesion(partida);
+    }, [partida]);
 
-    const guardarNombre = (nuevoNombre) => setNombre(nuevoNombre);
-    const guardarPuntajeJuego1 = (puntos) => setPuntajeJuego1(puntos);
-    const guardarPuntajeJuego2 = (puntos) => setPuntajeJuego2(puntos);
-    
-    const reiniciarJuego = () => {
-        setNombre("");
-        setPuntajeJuego1(0);
-        setPuntajeJuego2(0);
+    const guardarPuntajeJuego1 = (puntos) => {
+        setPartida((prev) => ({ ...prev, puntajeJuego1: puntos }));
     };
 
+    const guardarPuntajeJuego2 = (puntos) => {
+        setPartida((prev) => ({ ...prev, puntajeJuego2: puntos }));
+    };
+
+    const reiniciarJuego = () => {
+        setPartida(PARTIDA_INICIAL);
+    };
+
+    const puntajeTotal = partida.puntajeJuego1 + partida.puntajeJuego2;
+
     return (
-        <AutorizacionesContext.Provider value={{ 
-            nombre, 
-            puntajeJuego1, 
-            puntajeJuego2, 
-            guardarNombre, 
-            guardarPuntajeJuego1, 
-            guardarPuntajeJuego2, 
-            reiniciarJuego 
+        <JuegoContext.Provider value={{
+            puntajeJuego1: partida.puntajeJuego1,
+            puntajeJuego2: partida.puntajeJuego2,
+            puntajeTotal,
+            guardarPuntajeJuego1,
+            guardarPuntajeJuego2,
+            reiniciarJuego
         }}>
             {children}
-        </AutorizacionesContext.Provider>
+        </JuegoContext.Provider>
     );
 };
