@@ -1,6 +1,7 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AutorizacionesContext } from '../context/JuegoContexto';
+import { useUsuarios } from '../hooks/useUsuarios';
+import { useJuego } from '../hooks/useJuego';
 import servicesAutorizaciones from '../services/servicesAutorizaciones';
 
 import '../../css/PantallaLoginDiseno.css';
@@ -10,7 +11,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
 
   const navegar = useNavigate();
-  const { guardarNombre } = useContext(AutorizacionesContext);
+  const { guardarSesion } = useUsuarios();
+  const { reiniciarJuego } = useJuego();
 
   const manejarIngreso = async (e) => {
     e.preventDefault();
@@ -18,17 +20,26 @@ const Login = () => {
     const userLimpio = usuario.trim();
     const passLimpio = password.trim();
 
-    if (userLimpio !== '' && passLimpio !== '') {
+    if (userLimpio === '' || passLimpio === '') {
+      alert('Por favor, ingresá tu usuario y contraseña.');
+      return;
+    }
+
+    try {
       const usuarioEncontrado = await servicesAutorizaciones.login(userLimpio, passLimpio);
 
-      if (usuarioEncontrado) {
-        guardarNombre(usuarioEncontrado.nombre);
-        navegar('/juego-1');
-      } else {
+      if (!usuarioEncontrado) {
         alert('Usuario o contraseña incorrectos. ¡Revisá tus datos!');
+        return;
       }
-    } else {
-      alert('Por favor, ingresá tu usuario y contraseña.');
+
+      guardarSesion(usuarioEncontrado);
+      reiniciarJuego();
+
+      navegar(usuarioEncontrado.rol === 'profesor' ? '/usuarios-resultados' : '/juego-1');
+    } catch (error) {
+      console.log('Error al iniciar sesión:', error);
+      alert('No se pudo iniciar sesión. Intentá de nuevo en un momento.');
     }
   };
 
@@ -67,7 +78,7 @@ const Login = () => {
       <div className="columna-texto">
         <h1 className="titulo-granja">¡Bienvenidos a la Granja!</h1>
         <p className="descripcion-granja">
-          Descubrí cómo funciona el mundo agrícola. Prepará la tierra, 
+          Descubrí cómo funciona el mundo agrícola. Prepará la tierra,
           cuidá tus cultivos y aprendé divirtiéndote.
         </p>
       </div>
