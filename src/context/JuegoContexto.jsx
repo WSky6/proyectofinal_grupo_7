@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import { PARTIDA_INICIAL, guardarPartidaEnSesion, obtenerPartidaEnSesion } from "../services/servicesPartida";
+import { PARTIDA_INICIAL, guardarPartidaEnSesion, obtenerPartidaEnSesion } from "../services/servicesPartidas.js";
 
 export const JuegoContext = createContext(null);
 

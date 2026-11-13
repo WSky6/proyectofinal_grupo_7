@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { JuegoContext } from "../contexts/JuegoContext.jsx";
+import { JuegoContext } from "../context/JuegoContexto.jsx";
  
 export const useJuego = () => {
     const contexto = useContext(JuegoContext);
