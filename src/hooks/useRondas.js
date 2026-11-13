@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { listarRondas } from "../services/serviciosDeJuego.js";
+import { listarRondas } from "../services/servicesJuegos.js";
  
 export const useRondas = (numeroJuego) => {
     const [rondas, setRondas] = useState([]);
