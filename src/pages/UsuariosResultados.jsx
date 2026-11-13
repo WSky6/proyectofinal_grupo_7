@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import BotonNavegar from '../components/BotonNavegar';
+import '../../css/Resultados.css';
 
 const UsuariosResultados = () => {
   const [resultadosAlumnos, setResultadosAlumnos] = useState([]);
@@ -29,10 +30,10 @@ const UsuariosResultados = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Resultados de los Usuarios</h1>
+    <div className="contenedor-resultados">
+      <h1 className="titulo-resultados">Resultados de los Usuarios</h1>
       
-      <table border="1" style={{ width: '100%', textAlign: 'center', marginBottom: '20px' }}>
+      <table className="tabla-resultados">
         <thead>
           <tr>
             <th>Nombre del Alumno</th>
@@ -53,7 +54,7 @@ const UsuariosResultados = () => {
         </tbody>
       </table>
 
-      <div style={{ display: 'flex', gap: '15px', justifyContent: 'center' }}>
+      <div className="botones-navegacion">
         <BotonNavegar ruta="/juego-1" texto="Ir a Juego 1" />
         <BotonNavegar ruta="/juego-2" texto="Ir a Juego 2" />
       </div>
