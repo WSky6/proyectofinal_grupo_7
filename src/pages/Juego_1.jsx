@@ -1,22 +1,20 @@
-import { useState, useEffect, useMemo, useContext } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { AutorizacionesContext } from "../context/JuegoContexto";
-
-import { obtenerJuego1 } from "../services/serviciosDeJuego";
+import { useUsuarios } from "../hooks/useUsuarios";
+import { useJuego } from "../hooks/useJuego";
+import { listarRondas } from "../services/servicesJuegos";
 import CartaAnimal from "../components/CartaAnimal";
 import BotonOpcion from "../components/BotonOpcion";
 import Mensaje from "../components/Mensaje";
 
-import "../../css/Juego01.css";
+import "../../css/Components.css";
 
 const Juego1 = () => {
   const navigate = useNavigate();
 
-  const {
-    nombre,
-    guardarPuntajeJuego1
-  } = useContext(AutorizacionesContext);
+  const { usuarioActivo } = useUsuarios();
+  const nombre = usuarioActivo?.nombre;
+  const { guardarPuntajeJuego1 } = useJuego();
 
   const [rondas, setRondas] = useState([]);
   const [rondaActual, setRondaActual] = useState(0);
@@ -36,26 +34,20 @@ const Juego1 = () => {
       try {
         setCargando(true);
         setError(false);
+        const datos = await listarRondas(1);
 
-        const datos = await obtenerJuego1();
-
-        if (!Array.isArray(datos) || datos.length !== 5) {
-          throw new Error("Los datos del juego no son válidos.");
+        if (!Array.isArray(datos) || datos.length === 0) {
+          throw new Error("Los datos del juego no son válidos o están vacíos.");
         }
-
         if (activo) {
           setRondas(datos);
         }
-
       } catch (error) {
         console.error(error);
-
         if (activo) {
           setError(true);
         }
-
       } finally {
-
         if (activo) {
           setCargando(false);
         }
@@ -67,7 +59,6 @@ const Juego1 = () => {
     return () => {
       activo = false;
     };
-
   }, [intentoCarga]);
 
   const animalActual = useMemo(() => {
@@ -75,48 +66,39 @@ const Juego1 = () => {
   }, [rondas, rondaActual]);
 
   const seleccionarRespuesta = (opcion) => {
-
     if (respuestaSeleccionada !== null) {
       return;
     }
 
     setRespuestaSeleccionada(opcion);
 
-    const esCorrecta =
-      opcion === animalActual.respuestaCorrecta;
+    const esCorrecta = opcion === animalActual.respuestaCorrecta;
 
     if (esCorrecta) {
-
       setPuntaje((anterior) => anterior + 10);
 
       setFeedback({
         correcta: true,
         mensaje: `¡Correcto! ¡La ${animalActual.animal.toLowerCase()} comió! +10 puntos`
       });
-
     } else {
-
       setFeedback({
         correcta: false,
-        mensaje: `¡Esa no es su comida! La respuesta correcta era: ${animalActual.respuestaCorrecta}`
+        mensaje: `¡Error! La respuesta correcta era: ${animalActual.respuestaCorrecta}`
       });
     }
   };
 
   const siguienteRonda = () => {
-
     if (respuestaSeleccionada === null) {
       return;
     }
 
     if (rondaActual < rondas.length - 1) {
-
       setRondaActual((anterior) => anterior + 1);
       setRespuestaSeleccionada(null);
       setFeedback(null);
-
     } else {
-
       guardarPuntajeJuego1(puntaje);
       navigate("/juego-2");
     }
@@ -138,21 +120,15 @@ const Juego1 = () => {
 
         <p>No pudimos cargar los animales.</p>
 
-        <button
-          onClick={() =>
-            setIntentoCarga((anterior) => anterior + 1)
-          }
-        >
+        <button onClick={() => setIntentoCarga((anterior) => anterior + 1)}>
           Intentar nuevamente
         </button>
-
       </div>
     );
   }
 
   return (
     <div className="game-container">
-
       <header className="game-header">
         <h1>🐮 ¡Hora de Comer! 🐔</h1>
 
@@ -163,7 +139,6 @@ const Juego1 = () => {
       </header>
 
       <section className="game-info">
-
         <p>
           Pregunta {rondaActual + 1} de {rondas.length}
         </p>
@@ -171,25 +146,17 @@ const Juego1 = () => {
         <div className="score-box">
           ⭐ Puntaje: {puntaje} / 50
         </div>
-
       </section>
 
       <CartaAnimal animal={animalActual} />
 
       <section className="options-container">
-
         <h3>¿Qué come este animal?</h3>
 
         <div className="options-grid">
-
           {animalActual.opciones.map((opcion) => {
-
-            const seleccionada =
-              respuestaSeleccionada === opcion;
-
-            const correcta =
-              seleccionada &&
-              opcion === animalActual.respuestaCorrecta;
+            const seleccionada = respuestaSeleccionada === opcion;
+            const correcta = seleccionada && opcion === animalActual.respuestaCorrecta;
 
             return (
               <BotonOpcion
@@ -202,9 +169,7 @@ const Juego1 = () => {
               />
             );
           })}
-
         </div>
-
       </section>
 
       <Mensaje
@@ -213,23 +178,14 @@ const Juego1 = () => {
       />
 
       {respuestaSeleccionada !== null && (
-        <button
-          className="next-button"
-          onClick={siguienteRonda}
-        >
+        <button className="next-button" onClick={siguienteRonda}>
           {rondaActual === rondas.length - 1
             ? "Finalizar juego"
             : "Siguiente animal"}
         </button>
       )}
-
-      <footer className="game-footer">
-        <p>¡Seguí ayudando a los animalitos! 🌻</p>
-        <p>Cada respuesta correcta vale 10 puntos.</p>
-      </footer>
-
     </div>
   );
-}
+};
 
 export default Juego1;

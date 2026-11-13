@@ -1,18 +1,29 @@
-import React, { useState, useEffect, useContext, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AutorizacionesContext } from '../context/JuegoContexto';
-import { Box, Typography, Button, Container, Grid, Paper, Alert } from '@mui/material';
-import { obtenerJuego2 } from '../services/serviciosDeJuego'; // Asegúrate de importar el servicio
+import { useState, useEffect, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUsuarios } from "../hooks/useUsuarios";
+import { useJuego } from "../hooks/useJuego";
+import { useResultados } from "../hooks/useResultados";
+import { listarRondas } from "../services/servicesJuegos";
+import CartaAnimal from "../components/CartaAnimal";
+import BotonOpcion from "../components/BotonOpcion";
+import Mensaje from "../components/Mensaje";
+
+import "../../css/Components.css";
 
 const Juego2 = () => {
-  const { nombre, guardarPuntajeJuego2 } = useContext(AutorizacionesContext);
   const navigate = useNavigate();
+
+  const {
+    nombre,
+    guardarPuntajeJuego2
+  } = useContext(AutorizacionesContext);
 
   const [rondasJuego2, setRondasJuego2] = useState([]);
   const [rondaActual, setRondaActual] = useState(0);
-  const [puntosLocal, setPuntosLocal] = useState(0);
-  const [mensajeFeedback, setMensajeFeedback] = useState("");
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState(null);
+  const [puntaje, setPuntaje] = useState(0);
+
+  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState(null);
+  const [feedback, setFeedback] = useState(null);
 
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(false);
@@ -38,9 +49,11 @@ const Juego2 = () => {
 
       } catch (error) {
         console.error(error);
+
         if (activo) {
           setError(true);
         }
+
       } finally {
         if (activo) {
           setCargando(false);
@@ -53,143 +66,138 @@ const Juego2 = () => {
     return () => {
       activo = false;
     };
+
   }, [intentoCarga]);
 
-  const ronda = useMemo(() => {
+  const rondaActualObj = useMemo(() => {
     return rondasJuego2[rondaActual];
   }, [rondasJuego2, rondaActual]);
 
-  const seleccionarOpcion = (opcion, index) => {
-    if (opcionSeleccionada !== null) return; // Evita doble clic
-
-    setOpcionSeleccionada(index);
-
-    let nuevosPuntos = puntosLocal;
-    if (opcion.esIntruso) {
-      nuevosPuntos += 10;
-      setPuntosLocal(nuevosPuntos);
-      setMensajeFeedback("¡Sacaste al intruso! La granja está a salvo. El niño gana 10 puntos.");
-    } else {
-      setMensajeFeedback("Incorrecto. Ese sí es de la granja.");
+  const seleccionarRespuesta = (opcion) => {
+    if (respuestaSeleccionada !== null) {
+      return;
     }
 
-    // Espera 1.5 segundos para pasar a la siguiente ronda o finalizar
-    setTimeout(() => {
-      setMensajeFeedback("");
-      setOpcionSeleccionada(null);
+    setRespuestaSeleccionada(opcion);
 
-      if (rondaActual + 1 < rondasJuego2.length) {
-        setRondaActual(rondaActual + 1);
-      } else {
-        guardarPuntajeJuego2(nuevosPuntos);
-        navigate('/resultados');
-      }
-    }, 1500);
+    const esCorrecta = opcion === rondaActualObj.respuestaCorrecta;
+
+    if (esCorrecta) {
+      setPuntaje((anterior) => anterior + 10);
+      setFeedback({
+        correcta: true,
+        mensaje: `¡${opcion} intruso! La granja está a salvo. +10 puntos`
+      });
+    } else {
+      setFeedback({
+        correcta: false,
+        mensaje: `Incorrecto. ¡Ese sí es de la granja! El intruso era: ${rondaActualObj.respuestaCorrecta}`
+      });
+    }
+  };
+
+  const siguienteRonda = () => {
+    if (respuestaSeleccionada === null) {
+      return;
+    }
+
+    if (rondaActual < rondasJuego2.length - 1) {
+      setRondaActual((anterior) => anterior + 1);
+      setRespuestaSeleccionada(null);
+      setFeedback(null);
+    } else {
+      guardarPuntajeJuego2(puntaje);
+      navigate("/resultados"); // O la ruta a la que debas redirigir
+    }
   };
 
   if (cargando) {
     return (
-      <Container maxWidth="md" sx={{ mt: 8, textAlign: 'center' }}>
-        <Typography variant="h5" color="primary">Buscando al intruso...</Typography>
-        <Typography variant="body1" sx={{ mt: 2 }}>¡Preparando los animales de la granja! 🔍</Typography>
-      </Container>
+      <div className="game-container">
+        <h2>Buscando al intruso...</h2>
+        <p>¡Preparando los animales de la granja! 🔍</p>
+      </div>
     );
   }
 
-  if (error || !ronda) {
+  if (error || !rondaActualObj) {
     return (
-      <Container maxWidth="md" sx={{ mt: 8, textAlign: 'center' }}>
-        <Paper elevation={3} sx={{ p: 4, backgroundColor: '#ffebee' }}>
-          <Typography variant="h5" color="error" gutterBottom>¡Ups! Algo salió mal.</Typography>
-          <Typography variant="body1" sx={{ mb: 3 }}>No pudimos cargar los datos del Juego 2.</Typography>
-          <Button 
-            variant="contained" 
-            color="primary"
-            onClick={() => setIntentoCarga((anterior) => anterior + 1)}
-          >
-            Intentar nuevamente
-          </Button>
-        </Paper>
-      </Container>
+      <div className="game-container">
+        <h2>¡Ups! Algo salió mal.</h2>
+        <p>No pudimos cargar los datos del Juego 2.</p>
+        <button
+          onClick={() =>
+            setIntentoCarga((anterior) => anterior + 1)
+          }
+        >
+          Intentar nuevamente
+        </button>
+      </div>
     );
   }
 
   return (
-    <Container maxWidth="md" sx={{ mt: 4, textAlign: 'center' }}>
-      <Paper elevation={4} sx={{ p: 4, borderRadius: 3, backgroundColor: '#fffde7' }}>
-        <Typography variant="h4" color="primary" fontWeight="bold" gutterBottom>
-          Juego 2: El Intruso de la Granja 🔍
-        </Typography>
+    <div className="game-container">
 
-        <Typography variant="body1" color="textSecondary" sx={{ mb: 2 }}>
-          ¡Un animal que NO es de la granja se metió! Tenés que encontrarlo y sacarlo.
-        </Typography>
+      <header className="game-header">
+        <h1>🔍 Juego 2: El Intruso de la Granja 🔍</h1>
+        <p>
+          ¡Hola {nombre}! Un animal que NO es de la granja se metió. Tenés que encontrarlo y sacarlo.
+        </p>
+      </header>
 
-        <Typography variant="h6" color="textSecondary" sx={{ mb: 3 }}>
-          Jugador: <b>{nombre || "Pequeño Granjero"}</b> | Ronda {rondaActual + 1} de {rondasJuego2.length}
-        </Typography>
+      <section className="game-info">
+        <p>
+          Pregunta {rondaActual + 1} de {rondasJuego2.length}
+        </p>
 
-        <Typography variant="h5" sx={{ my: 3, color: '#333', fontWeight: 'bold' }}>
-          Haz clic en el animal que NO pertenece a la granja
-        </Typography>
+        <div className="score-box">
+          ⭐ Puntaje: {puntaje} / 50
+        </div>
+      </section>
 
-        <Grid container spacing={3} sx={{ justifyContent: 'center', my: 2 }}>
-          {ronda.opciones.map((opcion, index) => {
-            // Estilos dinámicos para acierto (verde) o error (rojo) como en el ejemplo
-            let backgroundColor = '#81c784'; // Verde por defecto para animales de granja
-            if (opcion.esIntruso && opcionSeleccionada !== null) {
-              backgroundColor = '#e57373'; // Rojo si es el intruso revelado
-            }
+      {/* Renderiza la tarjeta utilizando exactamente el mismo componente del Juego 1 */}
+      <CartaAnimal animal={rondaActualObj} />
+
+      <section className="options-container">
+        <h3>Haz clic en el animal que NO pertenece a la granja</h3>
+
+        <div className="options-grid">
+          {rondaActualObj.opciones.map((opcion) => {
+            const seleccionada = respuestaSeleccionada === opcion;
+            const correcta = seleccionada && opcion === rondaActualObj.respuestaCorrecta;
 
             return (
-              <Grid item xs={12} sm={4} key={index}>
-                <Button
-                  variant="contained"
-                  fullWidth
-                  disabled={opcionSeleccionada !== null}
-                  onClick={() => seleccionarOpcion(opcion, index)}
-                  sx={{
-                    height: 160,
-                    flexDirection: 'column',
-                    fontSize: '1.2rem',
-                    backgroundColor: opcionSeleccionada === index 
-                      ? (opcion.esIntruso ? '#e57373' : '#81c784') 
-                      : '#a5d6a7',
-                    color: '#000',
-                    borderRadius: '50px',
-                    boxShadow: 3,
-                    '&:hover': { backgroundColor: '#81c784' }
-                  }}
-                >
-                  <span style={{ fontSize: '3.5rem', marginBottom: '8px' }}>{opcion.emoji}</span>
-                  <b>{opcion.nombre}</b>
-                  {opcionSeleccionada !== null && opcion.esIntruso && (
-                    <Typography variant="caption" sx={{ color: '#b71c1c', fontWeight: 'bold', mt: 1 }}>
-                      ¡INTRUSO!
-                    </Typography>
-                  )}
-                </Button>
-              </Grid>
+              <BotonOpcion
+                key={opcion}
+                opcion={opcion}
+                onClick={() => seleccionarRespuesta(opcion)}
+                disabled={respuestaSeleccionada !== null}
+                seleccionada={seleccionada}
+                correcta={correcta}
+              />
             );
           })}
-        </Grid>
+        </div>
+      </section>
 
-        {mensajeFeedback && (
-          <Box sx={{ mt: 3 }}>
-            <Alert 
-              severity={mensajeFeedback.includes("salvo") ? "success" : "error"}
-              sx={{ fontSize: '1.1rem', justifyContent: 'center' }}
-            >
-              {mensajeFeedback}
-            </Alert>
-          </Box>
-        )}
+      <Mensaje
+        mensaje={feedback?.mensaje}
+        correcta={feedback?.correcta}
+      />
 
-        <Typography variant="h6" sx={{ mt: 4, color: '#2e7d32' }}>
-          Puntos acumulados en este juego: {puntosLocal}
-        </Typography>
-      </Paper>
-    </Container>
+      {respuestaSeleccionada !== null && (
+        <button
+          className="next-button"
+          onClick={siguienteRonda}
+        >
+          {rondaActual === rondasJuego2.length - 1
+            ? "Finalizar juego"
+            : "Siguiente animal"}
+        </button>
+      )}
+
+    </div>
   );
 };
 
