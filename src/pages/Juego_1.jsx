@@ -1,23 +1,21 @@
 import { useState, useEffect, useMemo, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { AutorizacionesContext } from "../context/JuegoContexto";
-
 import { obtenerJuego1 } from "../services/serviciosDeJuego";
-
 import CartaAnimal from "../components/CartaAnimal";
 import BotonOpcion from "../components/BotonOpcion";
 import Mensaje from "../components/Mensaje";
 
-import "../../css/Juego01.css";
+import "../../css/Components.css";
 
 const Juego1 = () => {
   const navigate = useNavigate();
-
+  console.log("Renderizando Juego1.jsx");
   const {
     nombre,
     guardarPuntajeJuego1
   } = useContext(AutorizacionesContext);
+  
 
   const [rondas, setRondas] = useState([]);
   const [rondaActual, setRondaActual] = useState(0);
@@ -39,9 +37,10 @@ const Juego1 = () => {
         setError(false);
 
         const datos = await obtenerJuego1();
+        console.log("Datos del juego cargados:", datos);
 
-        if (!Array.isArray(datos) || datos.length !== 5) {
-          throw new Error("Los datos del juego no son válidos.");
+        if (!Array.isArray(datos) || datos.length === 0) {
+          throw new Error("Los datos del juego no son válidos o están vacíos.");
         }
 
         if (activo) {
@@ -99,7 +98,7 @@ const Juego1 = () => {
 
       setFeedback({
         correcta: false,
-        mensaje: `¡Esa no es su comida! La respuesta correcta era: ${animalActual.respuestaCorrecta}`
+        mensaje: `¡Error! La respuesta correcta era: ${animalActual.respuestaCorrecta}`
       });
     }
   };
@@ -224,13 +223,8 @@ const Juego1 = () => {
         </button>
       )}
 
-      <footer className="game-footer">
-        <p>¡Seguí ayudando a los animalitos! 🌻</p>
-        <p>Cada respuesta correcta vale 10 puntos.</p>
-      </footer>
-
     </div>
   );
-};
+}
 
 export default Juego1;

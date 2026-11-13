@@ -1,0 +1,188 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Trebuchet MS", Arial, sans-serif;
+  background: #8db959;
+  color: #354b35;
+}
+
+.game-container {
+  min-height: 100vh;
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.game-header {
+  margin-bottom: 5px;
+}
+
+.game-header h1 {
+  font-size: 2.2rem;
+  color: #438c45;
+  margin-bottom: 5px;
+}
+
+.game-header p {
+  font-size: 1.15rem;
+}
+
+.game-info {
+  display: flex;
+  max-height: 50px;
+  justify-content:space-around;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+  flex-wrap: wrap;
+}
+
+.game-info p {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.score-box {
+  background: #fff3c4;
+  padding: 10px 10px;
+  border-radius: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.animal-card {
+  background:#7BE67F ;
+  border-radius: 50%;
+  padding: 20px;
+  margin: 0 auto;
+  width: 200px;
+  height: 200px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.animal-image {
+  display: block;
+  font-size: 110px;
+  margin-bottom: 5px;
+}
+
+.animal-card h2 {
+  color: #418d43;
+  font-size: 2rem;
+  margin: 10px 0;
+}
+
+.animal-card p {
+  font-size: 1.1rem;
+}
+
+.animal-data h3{
+  margin-block: 10px;
+}
+
+.options-container h3 {
+  font-size: 1.3rem;
+  margin-block: 2px;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.option-button {
+  min-height: 60px;
+  padding: 5px;
+  border: 3px solid #a5ce8b;
+  border-radius: 18px;
+  background: white;
+  color: #354b35;
+  font-size: 1.05rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.option-button:hover:not(:disabled) {
+  background: #e4f5d8;
+  transform: translateY(-3px);
+}
+
+.option-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.85;
+}
+
+.option-correct {
+  background: #b9edb0;
+  border-color: #429b3f;
+}
+
+.option-incorrect {
+  background: #ffd6d6;
+  border-color: #df6565;
+}
+
+.feedback {
+  margin: 15px auto;
+  padding: 10px;
+  max-width: 550px;
+  border-radius: 15px;
+  font-size: 1.15rem;
+  font-weight: bold;
+}
+
+.feedback-correct {
+  background: #d7f5d1;
+  color: #286d2c;
+}
+
+.feedback-incorrect {
+  background: #ffe0e0;
+  color: #a52a2a;
+}
+
+.next-button {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 15px;
+  background-color: #58a64c;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.next-button:hover {
+  background-color: #438b39;
+}
+
+.game-footer {
+  margin-top: 35px;
+  color: #71816c;
+}
+
+@media (max-width: 768px) {
+
+  .game-header h1 {
+    font-size: 2rem;
+  }
+
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .animal-image {
+    font-size: 80px;
+  }
+
+  .game-info {
+    justify-content: center;
+  }
+
+}

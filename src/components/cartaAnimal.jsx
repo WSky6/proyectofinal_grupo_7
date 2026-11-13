@@ -7,16 +7,17 @@ const CartaAnimal = ({ animal }) => {
   }
 
   return (
-    <div className="animal-card">
-
+    <div className="carta-animal">
+      <div className="animal-card">
       <span className="animal-image">
         {animal.imagen}
       </span>
-
-      <h2>{animal.animal}</h2>
-
+    </div>
+    
+    <div className="animal-data"> 
+      <h3>{animal.animal}</h3>
       <p>{animal.descripcion}</p>
-
+    </div>
     </div>
   );
 };

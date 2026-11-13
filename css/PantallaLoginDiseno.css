@@ -1,51 +1,65 @@
-.tarjeta-pantalla {
-  background-color: #ffffff;
-  border-radius: 15px;
-  padding: 40px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  text-align: center;
+.contenedor-login {
+  display: flex;
+  width: 100wh;
+  height: 100vh;
 }
 
-.titulo-granja {
-  color: #2c3e50;
-  font-size: 32px;
-  margin-bottom: 30px;
+
+.columna-formulario {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f9f9f9;
 }
+
+
+.columna-texto {
+  flex: 1; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #8bc34a;
+  color: white;
+  text-align: center;
+  padding: 40px;
+}
+
 
 .formulario-login {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  align-items: center;
-}
-
-.etiqueta-nombre {
-  font-size: 24px;
-  color: #333333;
-  font-weight: bold;
-}
-
-.entrada-nombre {
-  padding: 15px;
-  font-size: 20px;
-  border: 3px solid #35883a;
-  border-radius: 10px;
   width: 80%;
-  text-align: center;
-  outline: none;
+  max-width: 350px;
+  gap: 15px;
+}
+
+.entrada-datos {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
 }
 
 .boton-comenzar {
-  background-color: #35883a;
+  margin-top: 10px;
+  padding: 12px;
+  background-color: #ff9800; 
   color: white;
   border: none;
-  padding: 15px 40px;
-  font-size: 22px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
   font-weight: bold;
-  border-radius: 10px;
-  transition: transform 0.2s;
 }
 
 .boton-comenzar:hover {
-  transform: scale(1.05);
+  background-color: #e68a00;
+}
+
+.titulo-formulario {
+  font-size: 35px;
+  text-align: center;
 }

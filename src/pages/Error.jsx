@@ -1,5 +1,5 @@
 
-function Error() {
+const Error = () => {
   return (
     <div>
       <h1>404 - Página no encontrada</h1>

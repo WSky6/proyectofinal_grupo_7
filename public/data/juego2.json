@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
+    "opciones": [
+      "Perro",
+      "Gato",
+      "León"
+    ],
+    "respuestaCorrecta": "León"
+  },
+  {
+    "id": 2,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
+    "opciones": [
+      "Vaca",
+      "Oveja",
+      "Cocodrilo"
+    ],
+    "respuestaCorrecta": "Cocodrilo"
+  },
+  {
+    "id": 3,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
+    "opciones": [
+      "Gallina",
+      "Chancho",
+      "Elefante"
+    ],
+    "respuestaCorrecta": "Elefante"
+  },
+  {
+    "id": 4,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
+    "opciones": [
+      "Caballo",
+      "Vaca",
+      "Tiburón"
+    ],
+    "respuestaCorrecta": "Tiburón"
+  },
+  {
+    "id": 5,
+    "animal": "¿Cuál es el intruso?",
+    "imagen": "🔍",
+    "opciones": [
+      "Oveja",
+      "Perro",
+      "Pingüino"
+    ],
+    "respuestaCorrecta": "Pingüino"
+  }
+]
