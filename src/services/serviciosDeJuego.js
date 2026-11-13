@@ -1,23 +1,26 @@
 import axios from "axios";
-
-export const obtenerJuego1 = async () => {
-  try {
-    const respuesta = await axios.get("/data/juego1.json");
-    console.log("Datos del juego 1 obtenidos:", respuesta.data);
-    return respuesta.data;
-
-  } catch (error) {
-    console.error("Error al cargar el Juego 1:", error);
-    throw error;
-  }
+ 
+const RUTAS_JUEGOS = {
+    1: "/data/juego1.json",
+    2: "/data/juego2.json"
 };
-
-export const obtenerJuego2 = async () => {
-  try {
-    const respuesta = await axios.get("/data/juego2.json");
-    return respuesta.data;
-  } catch (error) {
-    console.error("Error al cargar el Juego 2:", error);
-    throw error;
-  }
+ 
+export const listarRondas = async (numeroJuego) => {
+    const ruta = RUTAS_JUEGOS[numeroJuego];
+ 
+    if (!ruta) {
+        throw new Error(`El juego ${numeroJuego} no existe`);
+    }
+ 
+    try {
+        const respuesta = await axios.get(ruta);
+        if (!Array.isArray(respuesta.data) || respuesta.data.length === 0) {
+            throw new Error("El archivo de rondas está vacío o es inválido");
+        }
+ 
+        return respuesta.data;
+    } catch (e) {
+        throw new Error(`Hay un error en la carga del juego ${numeroJuego}`);
+    }
 };
+ 
