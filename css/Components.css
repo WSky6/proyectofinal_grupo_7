@@ -53,6 +53,11 @@ body {
   font-weight: bold;
 }
 
+.carta-animal {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
 .animal-card {
   background:#7BE67F ;
   border-radius: 50%;
@@ -81,6 +86,7 @@ body {
 
 .animal-data h3{
   margin-block: 10px;
+  grid-column: 1 / 4;
 }
 
 .options-container h3 {

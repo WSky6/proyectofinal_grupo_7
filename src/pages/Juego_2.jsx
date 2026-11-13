@@ -156,7 +156,6 @@ const Juego2 = () => {
         </div>
       </section>
 
-      {/* Renderiza la tarjeta utilizando exactamente el mismo componente del Juego 1 */}
       <CartaAnimal animal={rondaActualObj} />
 
       <section className="options-container">
