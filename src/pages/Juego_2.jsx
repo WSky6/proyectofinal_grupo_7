@@ -1,9 +1,9 @@
-import { useState, useEffect, useMemo, useContext } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-
-import { AutorizacionesContext } from "../context/JuegoContexto";
-
-import { obtenerJuego2 } from "../services/serviciosDeJuego";
+import { useUsuarios } from "../hooks/useUsuarios";
+import { useJuego } from "../hooks/useJuego";
+import { useResultados } from "../hooks/useResultados";
+import { listarRondas } from "../services/servicesJuegos";
 import CartaAnimal from "../components/CartaAnimal";
 import BotonOpcion from "../components/BotonOpcion";
 import Mensaje from "../components/Mensaje";

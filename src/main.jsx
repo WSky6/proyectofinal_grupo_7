@@ -8,13 +8,19 @@ import { CssBaseline } from '@mui/material';
 import { RouterProvider } from 'react-router-dom';
 import { routes } from "./routes/routes";
 
-import { ProveedorContext } from './context/JuegoContexto';
+import { ProveedorUsuariosContext } from './context/UsuariosContexto';
+import { ProveedorJuegoContext } from './context/JuegoContexto';
+import { ProveedorResultadosContext } from './context/ResultadosContexto';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <ProveedorContext>
-      <CssBaseline />
-      <RouterProvider router={routes} />
-    </ProveedorContext>
+    <ProveedorUsuariosContext>
+      <ProveedorJuegoContext>
+        <ProveedorResultadosContext>
+          <CssBaseline />
+          <RouterProvider router={routes} />
+        </ProveedorResultadosContext>
+      </ProveedorJuegoContext>
+    </ProveedorUsuariosContext>
   </StrictMode>
 );
