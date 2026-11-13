@@ -1,6 +1,7 @@
-import { useState, useContext } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AutorizacionesContext } from '../context/JuegoContexto';
+import { useUsuarios } from '../hooks/useUsuarios';
+import { useJuego } from '../hooks/useJuego';
 import servicesAutorizaciones from '../services/servicesAutorizaciones';
 
 import '../../css/PantallaLoginDiseno.css';
@@ -8,33 +9,20 @@ import '../../css/PantallaLoginDiseno.css';
 const Login = () => {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
-  // 1. Creamos el estado para el error, exactamente como hizo el profe
   const [error, setError] = useState('');
 
   const navegar = useNavigate();
-  const { guardarNombre } = useContext(AutorizacionesContext);
+  const { guardarSesion } = useUsuarios();
+  const { reiniciarJuego } = useJuego();
 
   const manejarIngreso = async (e) => {
     e.preventDefault();
-    // 2. Limpiamos cualquier error previo al intentar un nuevo ingreso
+ 
     setError('');
 
     const userLimpio = usuario.trim();
     const passLimpio = password.trim();
 
-<<<<<<< Updated upstream
-    if (userLimpio !== '' && passLimpio !== '') {
-      const usuarioEncontrado = await servicesAutorizaciones.login(userLimpio, passLimpio);
-
-      if (usuarioEncontrado) {
-        guardarNombre(usuarioEncontrado);
-        navegar('/Juego_1');
-      } else {
-        alert('Usuario o contraseña incorrectos. ¡Revisá tus datos!');
-      }
-    } else {
-      alert('Por favor, ingresá tu usuario y contraseña.');
-=======
     if (userLimpio === '' || passLimpio === '') {
       setError('Por favor, ingresá tu usuario y contraseña.');
       return;
@@ -55,7 +43,6 @@ const Login = () => {
     } catch (err) {
       console.log('Error al iniciar sesión:', err);
       setError('No se pudo iniciar sesión. Intentá de nuevo en un momento.');
->>>>>>> Stashed changes
     }
   };
 
@@ -63,9 +50,8 @@ const Login = () => {
     <div className="contenedor-login">
       <div className="columna-formulario">
         <form className="formulario-login" onSubmit={manejarIngreso}>
-          <h2 className="titulo-formulario">Ingreso al Sistema</h2>
+          <h1 className="titulo-formulario">Ingreso al Sistema</h1>
 
-          {/* 3. Renderizado condicional: Solo se dibuja en pantalla si hay un texto en "error" */}
           {error && (
             <div 
               className="alerta-error" 
@@ -113,7 +99,7 @@ const Login = () => {
       <div className="columna-texto">
         <h1 className="titulo-granja">¡Bienvenidos a la Granja!</h1>
         <p className="descripcion-granja">
-          Descubrí cómo funciona el mundo agrícola. Prepará la tierra, 
+          Descubrí cómo funciona el mundo agrícola. Prepará la tierra,
           cuidá tus cultivos y aprendé divirtiéndote.
         </p>
       </div>
