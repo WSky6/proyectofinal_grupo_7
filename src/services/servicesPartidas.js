@@ -1,8 +1,17 @@
 const CLAVE_PARTIDA = "partidaEnCurso";
  
+export const PARTIDA_ACTUAL = {
+    rondaActual: 0,
+    puntaje: 0,
+    respuestaSeleccionada: null,
+    feedback: null
+}
+
 export const PARTIDA_INICIAL = {
     puntajeJuego1: 0,
-    puntajeJuego2: 0
+    puntajeJuego2: 0,
+    progresoJuego1: PARTIDA_ACTUAL,
+    progresoJuego2: PARTIDA_ACTUAL
 };
  
 export const obtenerPartidaEnSesion = () => {
