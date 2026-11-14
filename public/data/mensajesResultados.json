@@ -1,0 +1,26 @@
+[
+  {
+    "minimo": 90,
+    "imagen": "🏆",
+    "titulo": "¡Excelente!",
+    "mensaje": "¡Sos un gran granjero, {nombre}!"
+  },
+  {
+    "minimo": 60,
+    "imagen": "🎉",
+    "titulo": "¡Muy bien!",
+    "mensaje": "{nombre}, conocés muy bien la granja."
+  },
+  {
+    "minimo": 30,
+    "imagen": "👏",
+    "titulo": "¡Buen trabajo!",
+    "mensaje": "{nombre}, con un poco más de práctica vas a ser un experto."
+  },
+  {
+    "minimo": 0,
+    "imagen": "🌱",
+    "titulo": "¡Gracias por jugar!",
+    "mensaje": "{nombre}, probá de nuevo y vas a mejorar."
+  }
+]

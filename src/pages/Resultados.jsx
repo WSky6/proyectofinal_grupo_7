@@ -1,68 +1,83 @@
-import { useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
-// import { AutorizacionesContext } from '../context/JuegoContexto';
-import { Box, Typography, Button, Container, Paper } from '@mui/material';
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { Alert } from "@mui/material";
+import { useUsuarios } from "../hooks/useUsuarios";
+import { useJuego } from "../hooks/useJuego";
+import { useMensajes } from "../hooks/useMensajes";
+import CartaAnimal from "../components/CartaAnimal";
 
-const PUNTAJE_MAXIMO = 100;
+import "../../css/Components.css";
 
-const mensajePorPuntaje = (total, nombre) => {
-  if (total >= 90) return { emoji: '🏆', texto: `¡Excelente, ${nombre}! Sos un gran granjero.` };
-  if (total >= 60) return { emoji: '🎉', texto: `¡Muy bien, ${nombre}! Conocés muy bien la granja.` };
-  if (total >= 30) return { emoji: '👏', texto: `¡Buen trabajo, ${nombre}! Con un poco más de práctica vas a ser un experto.` };
-  return { emoji: '🌱', texto: `¡Gracias por jugar, ${nombre}! Probá de nuevo y vas a mejorar.` };
-};
+const PUNTAJE_POR_JUEGO = 50;
+const PUNTAJE_MAXIMO = PUNTAJE_POR_JUEGO * 2;
 
 const Resultados = () => {
-  // const { nombre, puntajeJuego1, puntajeJuego2, reiniciarJuego } =
-  //   useContext(AutorizacionesContext);
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
-  // const nombreMostrado = nombre || guardarNombre(); //Revisar y resolver esta mrd
-  // const total = puntajeJuego1 + puntajeJuego2;
-  // const mensaje = mensajePorPuntaje(total, nombreMostrado);
+  const { usuarioActivo, cerrarSesion } = useUsuarios();
+  const nombre = usuarioActivo?.nombre;
+  const { puntajeJuego1, puntajeJuego2, puntajeTotal, reiniciarJuego } = useJuego();
+  const { mensajes, cargando, error } = useMensajes();
 
-  // const jugarDeNuevo = () => {
-  //   reiniciarJuego();
-  //   navigate('/');
-  // };
+  // Se elige el mensaje de mayor "minimo" que alcanza el total (sin depender del orden del JSON)
+  const resultado = useMemo(() => {
+    const elegido = [...mensajes]
+      .sort((a, b) => b.minimo - a.minimo)
+      .find((m) => puntajeTotal >= m.minimo);
 
-  // return (
-  //   <Container maxWidth="sm" sx={{ mt: 4, textAlign: 'center' }}>
-  //     <Paper elevation={4} sx={{ p: 4, borderRadius: 3, backgroundColor: '#fffde7' }}>
-  //       <Typography variant="h4" color="primary" fontWeight="bold" gutterBottom>
-  //         Resultados finales
-  //       </Typography>
+    if (!elegido) {
+      return null;
+    }
 
-  //       <Typography variant="h5" sx={{ mb: 3 }}>
-  //         Jugador: <b>{nombreMostrado}</b>
-  //       </Typography>
+    // Misma forma que usa CartaAnimal: imagen, animal y descripcion
+    return {
+      imagen: elegido.imagen,
+      animal: elegido.titulo,
+      descripcion: elegido.mensaje.replace("{nombre}", nombre)
+    };
+  }, [mensajes, puntajeTotal, nombre]);
 
-  //       <Box sx={{ textAlign: 'left', mb: 3, fontSize: '1.2rem' }}>
-  //         <Typography variant="h6">Juego 1 (¡Hora de Comer!): <b>{puntajeJuego1}</b> / 50</Typography>
-  //         <Typography variant="h6">Juego 2 (El Intruso): <b>{puntajeJuego2}</b> / 50</Typography>
-  //       </Box>
+  const jugarDeNuevo = () => {
+    reiniciarJuego();
+    cerrarSesion();
+    navigate("/");
+  };
 
-  //       <Typography variant="h4" sx={{ color: '#2e7d32', fontWeight: 'bold', mb: 3 }}>
-  //         Total: {total} / {PUNTAJE_MAXIMO}
-  //       </Typography>
+  return (
+    <div className="game-container">
+      <header className="game-header">
+        <h1>🏆 Resultados finales 🏆</h1>
 
-  //       <Typography variant="h5" sx={{ mb: 4 }}>
-  //         <span style={{ fontSize: '2.5rem' }}>{mensaje.emoji}</span>
-  //         <br />
-  //         {mensaje.texto}
-  //       </Typography>
+        <p>¡Hola {nombre}! Mirá cómo te fue en la granja.</p>
+      </header>
 
-  //       <Button
-  //         variant="contained"
-  //         size="large"
-  //         onClick={jugarDeNuevo}
-  //         sx={{ borderRadius: '50px', px: 5, py: 1.5, fontSize: '1.2rem', textTransform: 'none' }}
-  //       >
-  //         Jugar de nuevo
-  //       </Button>
-  //     </Paper>
-  //   </Container>
-  // );
+      {/* maxHeight libre: en pantallas chicas las cajas de puntaje pasan a 2 filas */}
+      <section className="game-info" style={{ maxHeight: "none", marginBottom: "15px" }}>
+        <div className="score-box">
+          🐮 Juego 1: {puntajeJuego1} / {PUNTAJE_POR_JUEGO}
+        </div>
+
+        <div className="score-box">
+          🔍 Juego 2: {puntajeJuego2} / {PUNTAJE_POR_JUEGO}
+        </div>
+
+        <div className="score-box">
+          ⭐ Total: {puntajeTotal} / {PUNTAJE_MAXIMO}
+        </div>
+      </section>
+
+      {cargando && <p>Preparando tu mensaje... 🏆</p>}
+
+      {/* Si falla el JSON igual se ven los puntajes y el botón */}
+      {error && <Alert severity="error" sx={{ mb: 2 }}>{error}</Alert>}
+
+      <CartaAnimal animal={resultado} />
+
+      <button className="next-button" onClick={jugarDeNuevo}>
+        Jugar de nuevo
+      </button>
+    </div>
+  );
 };
 
 export default Resultados;
