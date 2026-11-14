@@ -2,7 +2,9 @@
   {
     "id": 1,
     "animal": "¿Cuál es el intruso?",
-    "imagen": "🔍",
+    "imagen": "🐶",
+    "imagen2": "🐱",
+    "imagen3": "🦁",
     "opciones": [
       "Perro",
       "Gato",
@@ -13,7 +15,9 @@
   {
     "id": 2,
     "animal": "¿Cuál es el intruso?",
-    "imagen": "🔍",
+    "imagen": "🐮",
+    "imagen2": "🐑",
+    "imagen3": "🐊",
     "opciones": [
       "Vaca",
       "Oveja",
@@ -24,7 +28,9 @@
   {
     "id": 3,
     "animal": "¿Cuál es el intruso?",
-    "imagen": "🔍",
+    "imagen": "🐔",
+    "imagen2": "🐷",
+    "imagen3": "🐘",
     "opciones": [
       "Gallina",
       "Chancho",
@@ -35,7 +41,9 @@
   {
     "id": 4,
     "animal": "¿Cuál es el intruso?",
-    "imagen": "🔍",
+    "imagen": "🐴",
+    "imagen2": "🐮",
+    "imagen3": "🦈",
     "opciones": [
       "Caballo",
       "Vaca",
@@ -46,7 +54,9 @@
   {
     "id": 5,
     "animal": "¿Cuál es el intruso?",
-    "imagen": "🔍",
+    "imagen": "🐑",
+    "imagen2": "🐶",
+    "imagen3": "🐧",
     "opciones": [
       "Oveja",
       "Perro",
