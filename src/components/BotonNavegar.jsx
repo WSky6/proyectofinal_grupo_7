@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+
 const BotonNavegar = ({ ruta, texto }) => {
   const navigate = useNavigate();
 
@@ -10,7 +12,6 @@ const BotonNavegar = ({ ruta, texto }) => {
       {texto}
     </button>
   );
-
 };
 
 export default BotonNavegar;

@@ -9,6 +9,7 @@ import '../../css/PantallaLoginDiseno.css';
 const Login = () => {
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const navegar = useNavigate();
   const { guardarSesion } = useUsuarios();
@@ -16,12 +17,14 @@ const Login = () => {
 
   const manejarIngreso = async (e) => {
     e.preventDefault();
+ 
+    setError('');
 
     const userLimpio = usuario.trim();
     const passLimpio = password.trim();
 
     if (userLimpio === '' || passLimpio === '') {
-      alert('Por favor, ingresá tu usuario y contraseña.');
+      setError('Por favor, ingresá tu usuario y contraseña.');
       return;
     }
 
@@ -29,7 +32,7 @@ const Login = () => {
       const usuarioEncontrado = await servicesAutorizaciones.login(userLimpio, passLimpio);
 
       if (!usuarioEncontrado) {
-        alert('Usuario o contraseña incorrectos. ¡Revisá tus datos!');
+        setError('Usuario o contraseña incorrectos. ¡Revisá tus datos!');
         return;
       }
 
@@ -37,9 +40,9 @@ const Login = () => {
       reiniciarJuego();
 
       navegar(usuarioEncontrado.rol === 'profesor' ? '/usuarios-resultados' : '/juego-1');
-    } catch (error) {
-      console.log('Error al iniciar sesión:', error);
-      alert('No se pudo iniciar sesión. Intentá de nuevo en un momento.');
+    } catch (err) {
+      console.log('Error al iniciar sesión:', err);
+      setError('No se pudo iniciar sesión. Intentá de nuevo en un momento.');
     }
   };
 
@@ -48,6 +51,24 @@ const Login = () => {
       <div className="columna-formulario">
         <form className="formulario-login" onSubmit={manejarIngreso}>
           <h1 className="titulo-formulario">Ingreso al Sistema</h1>
+
+          {error && (
+            <div 
+              className="alerta-error" 
+              style={{
+                backgroundColor: '#fdeded',
+                color: '#ef5350',
+                padding: '12px',
+                borderRadius: '6px',
+                marginBottom: '15px',
+                textAlign: 'center',
+                fontWeight: 'bold',
+                border: '1px solid #ef5350'
+              }}
+            >
+              {error}
+            </div>
+          )}
 
           <label htmlFor="usuario" className="etiqueta-input">Usuario</label>
           <input

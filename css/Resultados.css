@@ -1,0 +1,59 @@
+.contenedor-resultados {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.titulo-resultados {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-size: 2.2rem;
+}
+
+.tabla-resultados {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 35px;
+  overflow: hidden;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.tabla-resultados th,
+.tabla-resultados td {
+  padding: 16px;
+  text-align: center;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.tabla-resultados th {
+  background-color: #8bc34a;
+  color: white;
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tabla-resultados tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.tabla-resultados tbody tr:hover {
+  background-color: #f1f8e9;
+}
+
+.tabla-resultados tbody tr:last-of-type {
+  border-bottom: 3px solid #8bc34a;
+}
+
+.botones-navegacion {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
