@@ -18,6 +18,14 @@ export const ProveedorJuegoContext = ({ children }) => {
         setPartida((prev) => ({ ...prev, puntajeJuego2: puntos }));
     };
 
+    const guardarProgresoJuego1 = (progreso) => {
+        setPartida((prev) => ({...prev, progresoJuego1: progreso}));
+    }
+
+    const guardarProgresoJuego2 = (progreso) => {
+        setPartida((prev) => ({...prev, progresoJuego2: progreso}));
+    }
+
     const reiniciarJuego = () => {
         setPartida(PARTIDA_INICIAL);
     };
@@ -29,8 +37,12 @@ export const ProveedorJuegoContext = ({ children }) => {
             puntajeJuego1: partida.puntajeJuego1,
             puntajeJuego2: partida.puntajeJuego2,
             puntajeTotal,
+            progresoJuego1: partida.progresoJuego1,
+            progresoJuego2: partida.progresoJuego2,
             guardarPuntajeJuego1,
             guardarPuntajeJuego2,
+            guardarProgresoJuego1,
+            guardarProgresoJuego2,
             reiniciarJuego
         }}>
             {children}

@@ -1,8 +1,9 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUsuarios } from "../hooks/useUsuarios";
 import { useJuego } from "../hooks/useJuego";
 import { listarRondas } from "../services/servicesJuegos";
+import { Button } from "@mui/material";
 import CartaAnimal from "../components/CartaAnimal";
 import BotonOpcion from "../components/BotonOpcion";
 import Mensaje from "../components/Mensaje";
@@ -12,16 +13,16 @@ import "../../css/Components.css";
 const Juego1 = () => {
   const navigate = useNavigate();
 
-  const { usuarioActivo } = useUsuarios();
+  const { usuarioActivo, esProfesor } = useUsuarios();
   const nombre = usuarioActivo?.nombre;
-  const { guardarPuntajeJuego1 } = useJuego();
+  const { progresoJuego1, guardarProgresoJuego1, guardarPuntajeJuego1 } = useJuego();
 
   const [rondas, setRondas] = useState([]);
-  const [rondaActual, setRondaActual] = useState(0);
-  const [puntaje, setPuntaje] = useState(0);
+  const [rondaActual, setRondaActual] = useState(progresoJuego1.rondaActual);
+  const [puntaje, setPuntaje] = useState(progresoJuego1.puntaje);
 
-  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState(null);
-  const [feedback, setFeedback] = useState(null);
+  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState(progresoJuego1.respuestaSeleccionada);
+  const [feedback, setFeedback] = useState(progresoJuego1.feedback);
 
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(false);
@@ -54,12 +55,14 @@ const Juego1 = () => {
       }
     };
 
+    guardarProgresoJuego1({rondaActual, puntaje, respuestaSeleccionada, feedback});
+
     cargarRondas();
 
     return () => {
       activo = false;
     };
-  }, [intentoCarga]);
+  }, [rondaActual, puntaje, respuestaSeleccionada, feedback]);
 
   const animalActual = useMemo(() => {
     return rondas[rondaActual];
@@ -129,6 +132,10 @@ const Juego1 = () => {
 
   return (
     <div className="game-container">
+      { esProfesor && (
+          <Button color="inherit" component={Link} to="/usuarios-resultados" variant="outlined" className="boton-profe">
+            UsuariosResultados
+          </Button>)}
       <header className="game-header">
         <h1>🐮 ¡Hora de Comer! 🐔</h1>
 
