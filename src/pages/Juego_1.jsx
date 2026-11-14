@@ -13,7 +13,7 @@ import "../../css/Components.css";
 const Juego1 = () => {
   const navigate = useNavigate();
 
-  const { usuarioActivo, esProfesor } = useUsuarios();
+  const { usuarioActivo, esProfesor, cerrarSesion } = useUsuarios();
   const nombre = usuarioActivo?.nombre;
   const { progresoJuego1, guardarProgresoJuego1, guardarPuntajeJuego1 } = useJuego();
 
@@ -107,6 +107,13 @@ const Juego1 = () => {
     }
   };
 
+  const manejarCerrarSesion = () => {
+    if (cerrarSesion) {
+      cerrarSesion();
+    }
+    navigate("/");
+  };
+
   if (cargando) {
     return (
       <div className="game-container">
@@ -133,9 +140,30 @@ const Juego1 = () => {
   return (
     <div className="game-container">
       { esProfesor && (
-          <Button color="inherit" component={Link} to="/usuarios-resultados" variant="outlined" className="boton-profe">
-            UsuariosResultados
-          </Button>)}
+        <Button color="inherit" component={Link} to="/usuarios-resultados" variant="outlined" className="boton-profe">
+          UsuariosResultados
+        </Button>
+      )}
+
+      <button 
+        onClick={manejarCerrarSesion} 
+        style={{ 
+          padding: '8px 16px', 
+          backgroundColor: '#e74c3c', 
+          color: 'white', 
+          border: 'none', 
+          borderRadius: '5px', 
+          cursor: 'pointer', 
+          fontWeight: 'bold',
+          fontSize: '0.9rem',
+          display: 'block',
+          marginLeft: 'auto',
+          marginBottom: '15px'
+        }}
+      >
+        Cerrar Sesión
+      </button>
+
       <header className="game-header">
         <h1>🐮 ¡Hora de Comer! 🐔</h1>
 
