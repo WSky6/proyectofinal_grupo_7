@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useUsuarios } from "../hooks/useUsuarios";
 import { useJuego } from "../hooks/useJuego";
+import { useResultados } from "../hooks/useResultados";
 import { listarRondas } from "../services/servicesJuegos";
 import CartaAnimal from "../components/CartaAnimal";
 import BotonOpcion from "../components/BotonOpcion";
@@ -12,9 +13,11 @@ import "../../css/Components.css";
 const Juego2 = () => {
   const navigate = useNavigate();
 
-  const { usuarioActivo } = useUsuarios();
+  const { usuarioActivo, cerrarSesion } = useUsuarios();
   const nombre = usuarioActivo?.nombre;
-  const { guardarPuntajeJuego2 } = useJuego();
+  const { guardarPuntajeJuego2, progresoJuego1 } = useJuego();
+  
+  const { registrarResultado } = useResultados();
 
   const [rondas, setRondas] = useState([]);
   const [rondaActual, setRondaActual] = useState(0);
@@ -34,7 +37,7 @@ const Juego2 = () => {
       try {
         setCargando(true);
         setError(false);
-        const datos = await listarRondas(2); // Pasamos 2 para pedir las rondas del juego 2
+        const datos = await listarRondas(2);
 
         if (!Array.isArray(datos) || datos.length === 0) {
           throw new Error("Los datos del juego no son válidos o están vacíos.");
@@ -100,8 +103,24 @@ const Juego2 = () => {
       setFeedback(null);
     } else {
       guardarPuntajeJuego2(puntaje);
-      navigate("/resultados"); // Ajusta la ruta a donde deba ir al terminar el juego 2
+      
+      if (registrarResultado && usuarioActivo) {
+        registrarResultado({
+          usuario: usuarioActivo,
+          puntajeJuego1: progresoJuego1?.puntaje || 0,
+          puntajeJuego2: puntaje
+        });
+      }
+      
+      navigate("/resultados"); 
     }
+  };
+
+  const manejarCerrarSesion = () => {
+    if (cerrarSesion) {
+      cerrarSesion();
+    }
+    navigate("/");
   };
 
   if (cargando) {
@@ -127,6 +146,25 @@ const Juego2 = () => {
 
   return (
     <div className="game-container">
+      <button 
+        onClick={manejarCerrarSesion} 
+        style={{ 
+          padding: '8px 16px', 
+          backgroundColor: '#e74c3c', 
+          color: 'white', 
+          border: 'none', 
+          borderRadius: '5px', 
+          cursor: 'pointer', 
+          fontWeight: 'bold',
+          fontSize: '0.9rem',
+          display: 'block',
+          marginLeft: 'auto',
+          marginBottom: '15px'
+        }}
+      >
+        Cerrar Sesión
+      </button>
+
       <header className="game-header">
         <h1>🔍 Juego 2: El Intruso de la Granja 🔍</h1>
 
@@ -165,7 +203,8 @@ const Juego2 = () => {
                 correcta={correcta}
               />
             );
-          })}
+          })
+          }
         </div>
       </section>
 
