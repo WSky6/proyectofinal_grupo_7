@@ -85,22 +85,6 @@ const UsuariosResultados = () => {
       <div className="botones-navegacion">
         <BotonNavegar ruta="/juego-1" texto="Ir a Juego 1" />
         <BotonNavegar ruta="/juego-2" texto="Ir a Juego 2" />
-        
-        <button 
-          onClick={manejarCerrarSesion} 
-          style={{ 
-            padding: '10px 20px', 
-            backgroundColor: '#e74c3c', 
-            color: 'white', 
-            border: 'none', 
-            borderRadius: '5px', 
-            cursor: 'pointer', 
-            fontWeight: 'bold',
-            fontSize: '1rem'
-          }}
-        >
-          Cerrar Sesión
-        </button>
       </div>
     </div>
   );

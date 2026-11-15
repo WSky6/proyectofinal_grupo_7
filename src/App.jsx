@@ -1,9 +1,10 @@
 import { Outlet } from "react-router-dom";
-import { Container } from "@mui/material";
+import CerrarSesion from "./components/CerrarSesion";
 
 const App = () => {
   return (
     <div>
+      <CerrarSesion />
       <Outlet />
     </div>
   );
