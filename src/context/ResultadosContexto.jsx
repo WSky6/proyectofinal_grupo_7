@@ -13,7 +13,8 @@ export const ProveedorResultadosContext = ({ children }) => {
 
     const registrarResultado = ({ usuario, puntajeJuego1, puntajeJuego2 }) => {
         const nuevoResultado = {
-            id: usuario.id,
+            id: crypto.randomUUID(),
+            usuarioId: usuario.id,
             nombre: usuario.nombre,
             puntajeJuego1,
             puntajeJuego2,
