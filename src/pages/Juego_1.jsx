@@ -145,25 +145,6 @@ const Juego1 = () => {
         </Button>
       )}
 
-      <button 
-        onClick={manejarCerrarSesion} 
-        style={{ 
-          padding: '8px 16px', 
-          backgroundColor: '#e74c3c', 
-          color: 'white', 
-          border: 'none', 
-          borderRadius: '5px', 
-          cursor: 'pointer', 
-          fontWeight: 'bold',
-          fontSize: '0.9rem',
-          display: 'block',
-          marginLeft: 'auto',
-          marginBottom: '15px'
-        }}
-      >
-        Cerrar Sesión
-      </button>
-
       <header className="game-header">
         <h1>🐮 ¡Hora de Comer! 🐔</h1>
 

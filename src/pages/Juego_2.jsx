@@ -1,7 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUsuarios } from "../hooks/useUsuarios";
 import { useJuego } from "../hooks/useJuego";
+import { Button } from "@mui/material";
 import { useResultados } from "../hooks/useResultados";
 import { listarRondas } from "../services/servicesJuegos";
 import CartaAnimal from "../components/CartaAnimal";
@@ -13,7 +14,7 @@ import "../../css/Components.css";
 const Juego2 = () => {
   const navigate = useNavigate();
 
-  const { usuarioActivo, cerrarSesion } = useUsuarios();
+  const { usuarioActivo, cerrarSesion, esProfesor } = useUsuarios();
   const nombre = usuarioActivo?.nombre;
   const { guardarPuntajeJuego2, progresoJuego1 } = useJuego();
   
@@ -146,25 +147,12 @@ const Juego2 = () => {
 
   return (
     <div className="game-container">
-      <button 
-        onClick={manejarCerrarSesion} 
-        style={{ 
-          padding: '8px 16px', 
-          backgroundColor: '#e74c3c', 
-          color: 'white', 
-          border: 'none', 
-          borderRadius: '5px', 
-          cursor: 'pointer', 
-          fontWeight: 'bold',
-          fontSize: '0.9rem',
-          display: 'block',
-          marginLeft: 'auto',
-          marginBottom: '15px'
-        }}
-      >
-        Cerrar Sesión
-      </button>
-
+      { esProfesor && (
+        <Button color="inherit" component={Link} to="/usuarios-resultados" variant="outlined" className="boton-profe">
+          UsuariosResultados
+        </Button>
+      )}
+      
       <header className="game-header">
         <h1>🔍 Juego 2: El Intruso de la Granja 🔍</h1>
 
