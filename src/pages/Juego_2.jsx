@@ -15,16 +15,19 @@ const Juego2 = () => {
 
   const { usuarioActivo, cerrarSesion } = useUsuarios();
   const nombre = usuarioActivo?.nombre;
-  const { guardarPuntajeJuego2, progresoJuego1 } = useJuego();
+  
+  // 1. Extraemos el progreso y la función para guardar el progreso del Juego 2
+  const { progresoJuego2, guardarProgresoJuego2, guardarPuntajeJuego2, progresoJuego1 } = useJuego();
   
   const { registrarResultado } = useResultados();
 
   const [rondas, setRondas] = useState([]);
-  const [rondaActual, setRondaActual] = useState(0);
-  const [puntaje, setPuntaje] = useState(0);
-
-  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState(null);
-  const [feedback, setFeedback] = useState(null);
+  
+  // 2. Inicializamos los estados utilizando el progreso guardado
+  const [rondaActual, setRondaActual] = useState(progresoJuego2.rondaActual);
+  const [puntaje, setPuntaje] = useState(progresoJuego2.puntaje);
+  const [respuestaSeleccionada, setRespuestaSeleccionada] = useState(progresoJuego2.respuestaSeleccionada);
+  const [feedback, setFeedback] = useState(progresoJuego2.feedback);
 
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(false);
@@ -57,12 +60,15 @@ const Juego2 = () => {
       }
     };
 
+    // 3. Guardamos el progreso automáticamente cada vez que cambian los estados de la ronda
+    guardarProgresoJuego2({ rondaActual, puntaje, respuestaSeleccionada, feedback });
+
     cargarRondas();
 
     return () => {
       activo = false;
     };
-  }, [intentoCarga]);
+  }, [rondaActual, puntaje, respuestaSeleccionada, feedback, intentoCarga]);
 
   const animalActual = useMemo(() => {
     return rondas[rondaActual];
@@ -203,8 +209,7 @@ const Juego2 = () => {
                 correcta={correcta}
               />
             );
-          })
-          }
+          })}
         </div>
       </section>
 
