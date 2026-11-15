@@ -9,7 +9,7 @@
 # Carrizo Mateo
 ## Juego Granja 1 (Pantalla 2)
 ## Juego de granja donde se debe elegir que come el animal, guarda nombre de login y puntaje del mismo juego. (Max. 50)
-## Archivos Creados: public/data/juego1.json, css/Juego01.css, components/Mensaje.jsx. - Modificado: pages/Juego_1.jsx, components/BotonOpcion, components/CartaAnimal. Armado de estructura del proyecto, context: Juego, Resultado, Usuarios. Services, Hooks.
+## Archivos Creados: public/data/juego1.json, components/Mensaje.jsx. components/CerrarSesion.jsx. - Modificado: pages/Juego_1.jsx, components/BotonOpcion, components/CartaAnimal, pages/Juego_2.jsx, Resultados.jsx, UsuariosResultados.jsx. - Eliminado: usuariosDatos.json. - Armado de estructura del proyecto, context: Juego, Resultado, Usuarios. Services, Hooks. Agregado Boton de Cerrado de Sesion en App.
 ## Uso IA: Si. Fue usada para corroborar la estructura y corregir errores. (Problemas en las referencias y uso de contexto.) Tipo de IA: Copilot.
 
 # Callahuara Abel Alex
