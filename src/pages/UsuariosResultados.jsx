@@ -35,7 +35,7 @@ const UsuariosResultados = () => {
       .filter((u) => u.rol === 'estudiante')
       .map((alumno) => {
         const partidas = resultados.filter((r) => r.usuarioId === alumno.id);
-        const ultima = partidas[partidas.length - 1]; // la partida más reciente
+        const ultima = partidas[partidas.length - 1];
 
         return {
           id: alumno.id,
