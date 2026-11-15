@@ -1,12 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useUsuarios } from '../hooks/useUsuarios';
 import { useResultados } from '../hooks/useResultados';
+import { listarUsuarios } from '../services/servicesUsuarios'
 import BotonNavegar from '../components/BotonNavegar';
 import '../../css/Resultados.css';
 
 const UsuariosResultados = () => {
-  const [resultadosAlumnos, setResultadosAlumnos] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
+  const [error, setError] = useState(null);
   
   const navegar = useNavigate();
   const contextoUsuarios = useUsuarios();
@@ -17,30 +19,34 @@ const UsuariosResultados = () => {
   useEffect(() => {
     const cargarUsuarios = async () => {
       try {
-        const respuesta = await fetch('/data/usuarios.json');
-        const usuarios = await respuesta.json();
-        
-        const estudiantes = usuarios
-          .filter(u => u.rol === 'estudiante')
-          .map(e => {
-            const puntajeGuardado = resultados ? resultados.find(p => p.id === e.id) : null;
-            
-            return {
-              id: e.id,
-              nombre: e.nombre,
-              juego1: puntajeGuardado ? puntajeGuardado.puntajeJuego1 : 0,
-              juego2: puntajeGuardado ? puntajeGuardado.puntajeJuego2 : 0
-            };
-          });
-          
-        setResultadosAlumnos(estudiantes);
-      } catch (error) {
-        console.error(error);
+        const datos = await listarUsuarios();
+        setUsuarios(datos);
+      } catch (e) {
+        console.error(e);
+        setError('No se pudo cargar la lista de alumnos.');
       }
     };
-    
+
     cargarUsuarios();
-  }, [resultados]);
+  }, []);
+
+    const resultadosAlumnos = useMemo(() => {
+    return usuarios
+      .filter((u) => u.rol === 'estudiante')
+      .map((alumno) => {
+        const partidas = resultados.filter((r) => r.usuarioId === alumno.id);
+        const ultima = partidas[partidas.length - 1];
+
+        return {
+          id: alumno.id,
+          nombre: alumno.nombre,
+          jugo: partidas.length > 0,
+          partidas: partidas.length,
+          juego1: ultima ? ultima.puntajeJuego1 : 0,
+          juego2: ultima ? ultima.puntajeJuego2 : 0
+        };
+      });
+  }, [usuarios, resultados]);
 
   const manejarCerrarSesion = () => {
     if (cerrarSesion) {
@@ -60,6 +66,7 @@ const UsuariosResultados = () => {
             <th>Puntaje Juego 1</th>
             <th>Puntaje Juego 2</th>
             <th>Puntaje Total</th>
+            <th>Partidas Jugadas</th>
           </tr>
         </thead>
         <tbody>
@@ -69,6 +76,7 @@ const UsuariosResultados = () => {
               <td>{alumno.juego1}</td>
               <td>{alumno.juego2}</td>
               <td>{alumno.juego1 + alumno.juego2}</td>
+              <td>{alumno.partidas}</td>
             </tr>
           ))}
         </tbody>
