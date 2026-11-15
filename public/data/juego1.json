@@ -5,8 +5,8 @@
     "animal": "Vaca",
     "imagen": "🐮",
     "opciones": [
-      "Pasto",
       "Carne",
+      "Pasto",
       "Banana"
     ],
     "respuestaCorrecta": "Pasto"
@@ -27,9 +27,9 @@
     "animal": "Chancho",
     "imagen": "🐷",
     "opciones": [
-      "Todo lo que encuentra",
+      "Solo Carne",
       "Solo Pasto",
-      "Solo Carne"
+      "Todo lo que encuentra"
     ],
     "respuestaCorrecta": "Todo lo que encuentra"
   },
@@ -49,8 +49,8 @@
     "animal": "Caballo",
     "imagen": "🐴",
     "opciones": [
-      "Pasto y Zanahoria",
       "Pollo",
+      "Pasto y Zanahoria",
       "Helado"
     ],
     "respuestaCorrecta": "Pasto y Zanahoria"
