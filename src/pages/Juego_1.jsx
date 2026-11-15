@@ -13,7 +13,7 @@ import "../../css/Components.css";
 const Juego1 = () => {
   const navigate = useNavigate();
 
-  const { usuarioActivo, esProfesor, cerrarSesion } = useUsuarios();
+  const { usuarioActivo, esProfesor } = useUsuarios();
   const nombre = usuarioActivo?.nombre;
   const { progresoJuego1, guardarProgresoJuego1, guardarPuntajeJuego1 } = useJuego();
 
@@ -105,13 +105,6 @@ const Juego1 = () => {
       guardarPuntajeJuego1(puntaje);
       navigate("/juego-2");
     }
-  };
-
-  const manejarCerrarSesion = () => {
-    if (cerrarSesion) {
-      cerrarSesion();
-    }
-    navigate("/");
   };
 
   if (cargando) {

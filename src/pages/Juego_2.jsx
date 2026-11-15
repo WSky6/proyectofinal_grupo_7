@@ -14,7 +14,7 @@ import "../../css/Components.css";
 const Juego2 = () => {
   const navigate = useNavigate();
 
-  const { usuarioActivo, cerrarSesion, esProfesor } = useUsuarios();
+  const { usuarioActivo, esProfesor } = useUsuarios();
   const nombre = usuarioActivo?.nombre;
   
   // 1. Extraemos el progreso y la función para guardar el progreso del Juego 2
@@ -121,13 +121,6 @@ const Juego2 = () => {
       
       navigate("/resultados"); 
     }
-  };
-
-  const manejarCerrarSesion = () => {
-    if (cerrarSesion) {
-      cerrarSesion();
-    }
-    navigate("/");
   };
 
   if (cargando) {
