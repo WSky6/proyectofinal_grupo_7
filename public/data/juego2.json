@@ -2,13 +2,13 @@
   {
     "id": 1,
     "animal": "¿Cuál es el intruso?",
-    "imagen": "🐶",
+    "imagen": "🦁",
     "imagen2": "🐱",
-    "imagen3": "🦁",
+    "imagen3": "🐶",
     "opciones": [
-      "Perro",
+      "León",
       "Gato",
-      "León"
+      "Perro"
     ],
     "respuestaCorrecta": "León"
   },
@@ -16,38 +16,38 @@
     "id": 2,
     "animal": "¿Cuál es el intruso?",
     "imagen": "🐮",
-    "imagen2": "🐑",
-    "imagen3": "🐊",
+    "imagen2": "🐊",
+    "imagen3": "🐑",
     "opciones": [
       "Vaca",
-      "Oveja",
-      "Cocodrilo"
+      "Cocodrilo",
+      "Oveja"
     ],
     "respuestaCorrecta": "Cocodrilo"
   },
   {
     "id": 3,
     "animal": "¿Cuál es el intruso?",
-    "imagen": "🐔",
-    "imagen2": "🐷",
-    "imagen3": "🐘",
+    "imagen": "🐘",
+    "imagen2": "🐔",
+    "imagen3": "🐷",
     "opciones": [
+      "Elefante",
       "Gallina",
-      "Chancho",
-      "Elefante"
+      "Chancho"
     ],
     "respuestaCorrecta": "Elefante"
   },
   {
     "id": 4,
     "animal": "¿Cuál es el intruso?",
-    "imagen": "🐴",
-    "imagen2": "🐮",
-    "imagen3": "🦈",
+    "imagen": "🐮",
+    "imagen2": "🦈",
+    "imagen3": "🐴",
     "opciones": [
-      "Caballo",
       "Vaca",
-      "Tiburón"
+      "Tiburón",
+      "Caballo"
     ],
     "respuestaCorrecta": "Tiburón"
   },
